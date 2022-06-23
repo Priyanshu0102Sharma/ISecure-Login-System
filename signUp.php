@@ -1,3 +1,33 @@
+<?php
+if($_SERVER['REQUEST_METHOD']=='POST'){
+require "partials/_dbconnect.php";
+$email=$_POST['email'];
+$username=$_POST['username'];
+$password=$_POST['password'];
+$cpassword=$_POST['cpassword'];
+$exist=false;
+if(($password==$cpassword)&& $exist==false)
+{
+    $sql="INSERT INTO `users` (`username`, `email`, `password`, `date`) VALUES ('$username', '$email', '$password', current_timestamp())";
+    $result=mysqli_query($conn,$sql);
+    if($result)
+    {
+        echo '<div class="alert alert-success alert-dismissible" role="alert">
+          <strong>SUCCESS</strong> you have signed up!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>';
+
+    }
+    else
+    {
+        echo '<div class="alert alert-danger alert-dismissible" role="alert">
+          <strong>SORRY</strong> something went wrong!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>';
+    }
+}
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

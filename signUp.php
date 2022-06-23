@@ -6,6 +6,20 @@ $username=$_POST['username'];
 $password=$_POST['password'];
 $cpassword=$_POST['cpassword'];
 $exist=false;
+$existquerry="SELECT * FROM users where username='$username'";
+$result=mysqli_query($conn,$existquerry);
+$numrows=mysqli_num_rows($result);
+if($numrows>0)
+{
+    $exist=true;
+    echo '<div class="alert alert-danger alert-dismissible" role="alert">
+          <strong>SORRY</strong> This username is already taken!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>';
+}
+else
+{
+    $exist=false;
+}
 if(($password==$cpassword)&& $exist==false)
 {
     $sql="INSERT INTO `users` (`username`, `email`, `password`, `date`) VALUES ('$username', '$email', '$password', current_timestamp())";

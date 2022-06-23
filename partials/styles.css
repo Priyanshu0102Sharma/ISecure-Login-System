@@ -1,0 +1,13 @@
+.form1 form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.btn{
+    border-radius: 20px;
+    background-color: rgb(47, 4, 4);
+}
+.btn:hover{
+    background-color: blue;
+    cursor: pointer;
+}

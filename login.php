@@ -8,27 +8,41 @@ $password=$_POST['password'];
 
 
 
-    $sql="SELECT * from users where username ='$username' AND password='$password'";
+    // $sql="SELECT * from users where username ='$username' AND password='$password'";
+    $sql="SELECT * from users where username ='$username'";
     $result=mysqli_query($conn,$sql);
     $num=mysqli_num_rows($result);
 
     if($num==1)
-    {
-        echo '<div class="alert alert-success alert-dismissible" role="alert">
-          <strong>SUCCESS</strong> you have Logged in!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>';
-
-          session_start();
-          $_SESSION['loggedin']=true;
-          $_SESSION['username']=$username;
-          echo "Succesful";
-          header("location: welcome.php");
+    { while($row=mysqli_fetch_assoc($result))
+      {
+        if(password_verify($password,$row['password']))
+        {
+          $login=true;
+          
+          echo '<div class="alert alert-success alert-dismissible" role="alert">
+            <strong>SUCCESS</strong> you have Logged in!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+  
+            session_start();
+            $_SESSION['loggedin']=true;
+            $_SESSION['username']=$username;
+            echo "Succesful";
+            header("location: welcome.php");
+        }
+        else
+        {
+          echo '<div class="alert alert-danger alert-dismissible" role="alert">
+          <strong>SORRY</strong> INVALID CREDENTIALS!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>';  
+        }
+      }
 
     }
     else
     {
         echo '<div class="alert alert-danger alert-dismissible" role="alert">
-          <strong>SORRY</strong> something went wrong!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <strong>SORRY</strong> INVALID CREDENTIALS!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>';
     }
 }

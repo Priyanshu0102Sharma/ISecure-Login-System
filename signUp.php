@@ -21,14 +21,15 @@ else
     $exist=false;
 }
 if(($password==$cpassword)&& $exist==false)
-{
-    $sql="INSERT INTO `users` (`username`, `email`, `password`, `date`) VALUES ('$username', '$email', '$password', current_timestamp())";
+{$hash=password_hash($password,PASSWORD_DEFAULT);
+    $sql="INSERT INTO `users` (`username`, `email`, `password`, `date`) VALUES ('$username', '$email', '$hash', current_timestamp())";
     $result=mysqli_query($conn,$sql);
     if($result)
     {
         echo '<div class="alert alert-success alert-dismissible" role="alert">
           <strong>SUCCESS</strong> you have signed up!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>';
+         
 
     }
     else
@@ -38,6 +39,8 @@ if(($password==$cpassword)&& $exist==false)
           </div>';
     }
 }
+// sleep(2);
+// header("location: login.php");
 }
 ?>
 
